@@ -31,10 +31,16 @@ app.post("/",function(req,res)
     const url="https://us13.api.mailchimp.com/3.0/lists/1e609448bc";
     const options={
         method:"POST",
-        auth: "shreyansh:bce541be861a8dac08faaf6c2cc58b16-us13"
+        auth: "shreyansh:bvce541be861a8dac08faaf6c2cc58b16-us13"
     }
    const request= https.request(url,options,function(response)
     {
+        if(response.statusCode===200)
+        {
+            res.sendFile(__dirname+"/success.html");
+        }
+        else
+        res.sendFile(__dirname+"/fail.html");
         response.on("data",function(data)
         {
             console.log(JSON.parse(data));
@@ -42,6 +48,11 @@ app.post("/",function(req,res)
     });
     request.write(jsondata);
     request.end();
+
+});
+app.post("/fail",function(req,res)
+{res.redirect("/");
+    
 
 });
 //1e609448bc
